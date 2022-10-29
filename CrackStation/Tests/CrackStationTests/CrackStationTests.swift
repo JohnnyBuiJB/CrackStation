@@ -5,79 +5,79 @@ import Foundation
 
 final class CrackStationTests: XCTestCase {
     func testLowerCaseLetters() async {
-        // Given
-        for char in "abcdefghijklmnopqrstuvwxyz" {
-            let expSHA1 = encryptUsingSha1(from: String(char))
-            var actSHA1:String?
-
-            let cs = CrackStation()
+        let cs = CrackStation()
+        
+        for password in "abcdefghijklmnopqrstuvwxyz" {
+            // Given
+            let hash = encryptUsingSha1(from: String(password))
+            var crackedPassword:String = ""
 
             // When
-            let hash = cs.decrypt(shaHash:String(char))
+            let result = cs.decrypt(shaHash:hash)
 
-            if hash != nil {
-                actSHA1 = hash!
+            if result != nil {
+                crackedPassword = result!
             }
 
             // Then
-            XCTAssert(actSHA1 == expSHA1)
+            XCTAssert(crackedPassword == String(password))
         }
     }
 
     func testUpperCaseLetters() async {
-        // Given
-        for char in "ABCDEFGHIJKMNOPQRSTUVWXYZ" {
-            let expSHA1 = encryptUsingSha1(from: String(char))
-            var actSHA1:String?
-
-            let cs = CrackStation()
+        let cs = CrackStation()
+        
+        for password in "ABCDEFGHIJKMNOPQRSTUVWXYZ" {
+            // Given
+            let hash = encryptUsingSha1(from: String(password))
+            var crackedPassword:String = ""
 
             // When
-            let hash = cs.decrypt(shaHash:String(char))
+            let result = cs.decrypt(shaHash:hash)
 
-            if hash != nil {
-                actSHA1 = hash!
+            if result != nil {
+                crackedPassword = result!
             }
-            
+
             // Then
-            XCTAssert(actSHA1 == expSHA1)
+            XCTAssert(crackedPassword == String(password))
         }
     }
-
+    
     func testUpperDecimalDigits() async {
-        // Given
-        for digit in 0...9 {
-            let expSHA1 = encryptUsingSha1(from: String(digit))
-            var actSHA1:String?
-
-            let cs = CrackStation()
+        let cs = CrackStation()
+        
+        for password in 0...9 {
+            // Given
+            let hash = encryptUsingSha1(from: String(password))
+            var crackedPassword:String = ""
 
             // When
-            let hash = cs.decrypt(shaHash:String(digit))
+            let result = cs.decrypt(shaHash:hash)
 
-            if hash != nil {
-                actSHA1 = hash!
+            if result != nil {
+                crackedPassword = result!
             }
 
             // Then
-            XCTAssert(actSHA1 == expSHA1)
+            XCTAssert(crackedPassword == String(password))
         }
     }
 
     func testUnsupportedPassword() async {
        // Given
        let cs = CrackStation()
-       var actSHA1:String?
+       var actSHA1:String = ""
 
        // When
-        let hash = cs.decrypt(shaHash:String("abcde"))
+        let hash = cs.decrypt(shaHash:String("aa"))
 
         if hash != nil {
             actSHA1 = hash!
         }
 
        // Then
-       XCTAssertNil(actSHA1)
+       XCTAssert(actSHA1 == "")
    }
 }
 
