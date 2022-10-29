@@ -63,6 +63,22 @@ final class CrackStationTests: XCTestCase {
             XCTAssert(actSHA1 == expSHA1)
         }
     }
+
+    func testUnsupportedPassword() async {
+       // Given
+       let cs = CrackStation()
+       var actSHA1:String?
+
+       // When
+        let hash = cs.decrypt(shaHash:String("abcde"))
+
+        if hash != nil {
+            actSHA1 = hash!
+        }
+
+       // Then
+       XCTAssertNil(actSHA1)
+   }
 }
 
 /// Input: a string.
