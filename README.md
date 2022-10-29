@@ -12,6 +12,14 @@ Currently, the package only supports cracking hashes of [A-Za-z0-9]{1,2}.
 - Throws: none
 - Returns: none
 
+**func decrypt(shaHash: String) -> String?**
+- Description: crack the provided hash shaHash
+- Parameter:
+  - shaHash: String (input): hashed to be decrypted
+- Throws: none
+- Returns: the corresponding password if the function succeeds, otherwise return nil
+
+
 ## How to use?
 ```swift
 import CrackStation
@@ -20,12 +28,7 @@ let cs = CrackStation()
 let password = cs.decrypt(shaHash:hash)
 ```
 
-**func decrypt(shaHash: String) -> String?**
-- Description: crack the provided hash shaHash
-- Parameter:
-  - shaHash: String (input): hashed to be decrypted
-- Throws: none
-- Returns: the corresponding password if the function succeeds, otherwise return nil
+
 
 ## Release
 The current newest release is version **1.0.0**.
