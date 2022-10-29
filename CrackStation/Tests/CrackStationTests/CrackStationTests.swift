@@ -78,7 +78,32 @@ final class CrackStationTests: XCTestCase {
 
        // Then
        XCTAssert(actSHA1 == "")
-   }
+    }
+    
+    func testTwoLetterPassword() async {
+        let cs = CrackStation()
+        
+        for l1 in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ0123456789" {
+            for l2 in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKMNOPQRSTUVWXYZ0123456789" {
+                // Given
+                let password = String(l1) + String(l2)
+                
+                let hash = encryptUsingSha1(from: String(password))
+                var crackedPassword:String = ""
+
+                // When
+                let result = cs.decrypt(shaHash:hash)
+
+                if result != nil {
+                    crackedPassword = result!
+                }
+
+                // Then
+                XCTAssert(crackedPassword == String(password))
+            }
+        }
+    }
+    
 }
 
 /// Input: a string.
