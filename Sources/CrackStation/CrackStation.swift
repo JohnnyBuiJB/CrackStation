@@ -1,9 +1,9 @@
 import Foundation
 
 class CrackStation: Decrypter {
-    var lookupTable: [String: String] = [:]
+    private var lookupTable: [String: String] = [:]
 
-    static func loadDictionaryFromDisk() throws -> [String : String] {
+    private static func loadDictionaryFromDisk() throws -> [String : String] {
         guard let path = Bundle.module.url(forResource: "HashDict", withExtension: "json") else { return [:] }
 
         let data = try Data(contentsOf: path)
