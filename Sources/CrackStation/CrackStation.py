@@ -37,6 +37,13 @@ routes = web.RouteTableDef()
 
 @routes.get("/password")
 async def crack_shahash(request: web.Request) -> web.Response:
+    # Sanity check
+    if 'shaHash' not in request.query:
+        response = web.json_response()
+        response.set_status(400)
+        
+        return response
+    
     shaHash = request.query['shaHash']
     
     print("shaHash = " + shaHash)
