@@ -51,11 +51,6 @@ async def crack_shahash(request: web.Request) -> web.Response:
     
     return response
 
-@routes.get("/failedTest")
-async def crack_shahash(request: web.Request) -> web.Response:
-    return web.HTTPNotFound()
-
-
 def init():
     app = web.Application()
     app.add_routes(routes)
