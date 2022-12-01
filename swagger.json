@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Crack Station - 2.0.0
+  description: |-
+    CrackStation is a cryptography web service that supports cracking SHA hashes. The library takes an SHA hash as input, then search it in pre-computed look up table.
+    
+    Currently, the library only supports cracking SHA-1 or hashes of [A-Za-z0-9?!]{1,2,3} and unsalted passwords.
+  contact:
+    email: buivy@oregonstate.edu
+  version: 2.0.0
+servers:
+  - url: http://18.237.215.131:8080
+tags:
+  - name: password
+    description: Everything about cracking password
+paths:
+  '/password/{shaHash}':
+    get:
+      tags:
+        - password
+      summary: Get password by SHA-1 or SHA-256 hashes
+      description: Returns the password corresponding the provided hash
+      operationId: getPasswordByShaHash
+      parameters:
+        - name: shaHash
+          in: path
+          description: 'The SHA hash to be decrypted'
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Decryption'          
+        '404':
+          description: Hash not found
+components:
+  schemas:
+    Decryption:
+      type: object
+      additionalProperties:
+        type: string
+      example:
+        6695aabe95a6ef05f1cdc1ffbb313d15164b7ee7: zzx
+        
