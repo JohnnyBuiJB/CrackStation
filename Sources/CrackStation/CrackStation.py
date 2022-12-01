@@ -8,14 +8,9 @@ class ShaHashCracker:
     def __init__(self, worlds=[]):
         __d_hash_path = './HashDict.json'
         system_name = platform.system()
-        if system_name == "Darwin":     # Mac
-            self.__log_path = \
-                "/Users/johnnybui/repos/CrackStation/Sources/CrackStation/log/logs.txt"
                 
-        elif system_name == "Linux":    # EC2 instance
+        if system_name == "Linux":    # EC2 instance
             import boto3    # EC2
-            
-            self.__log_path = "/home/ec2-user/logs.txt"
         
             # Download shahash table from S3
             if not os.path.exists(__d_hash_path):
@@ -23,7 +18,7 @@ class ShaHashCracker:
                 s3.download_file('crack-station', 'HashDict.json', 'HashDict.json')
             
         with open(__d_hash_path) as f:
-                self.__d_hash = json.load(f)
+            self.__d_hash = json.load(f)
 
     async def decrypt(self, shaHash):
         try:
@@ -35,17 +30,9 @@ class ShaHashCracker:
 
 routes = web.RouteTableDef()
 
-@routes.get("/password")
+@routes.get("/password/{shaHash}")
 async def crack_shahash(request: web.Request) -> web.Response:
-    # Sanity check
-    if 'shaHash' not in request.query:
-        response = web.json_response()
-        response.set_status(400)
-        
-        return response
-    
-    shaHash = request.query['shaHash']
-    
+    shaHash = request.rel_url.parts[2]
     print("shaHash = " + shaHash)
     
     password = await (request.app["cracker"]).decrypt(shaHash)
@@ -69,7 +56,6 @@ def init():
         web.run_app(app, port="125")
     elif system_name == "Linux":    # EC2 instance
         web.run_app(app)
-    
     
 if __name__ == "__main__":
     init()
