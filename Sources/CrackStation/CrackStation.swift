@@ -1,6 +1,6 @@
 import Foundation
 
-class CrackStation: Decrypter {
+public class CrackStation: Decrypter {
     private var lookupTable: [String: String] = [:]
 
     private static func loadDictionaryFromDisk() throws -> [String : String] {
@@ -16,7 +16,7 @@ class CrackStation: Decrypter {
         }
     }
     
-    required init() {
+    public required init() {
         do {
             lookupTable = try CrackStation.loadDictionaryFromDisk()
         }
@@ -25,7 +25,7 @@ class CrackStation: Decrypter {
         }
     }
 
-    func decrypt(shaHash: String) -> String? {
+    public func decrypt(shaHash: String) -> String? {
         return lookupTable[shaHash]
     }
 }

@@ -1,7 +1,7 @@
 import XCTest
 import CryptoKit
 import Foundation
-@testable import CrackStation
+import CrackStation
 
 let supportedSymbol = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?!"
 
